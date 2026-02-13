@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Special</title>
+<title>Valentine Magic</title>
 
 <style>
 body{
@@ -13,10 +13,9 @@ justify-content:center;
 align-items:center;
 height:100vh;
 font-family:Arial, sans-serif;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
+background:linear-gradient(135deg,#ff4d6d,#ff758c);
 color:white;
 text-align:center;
-overflow:hidden;
 }
 
 .card{
@@ -32,19 +31,15 @@ text-align:center;
 }
 
 button{
-padding:10px 20px;
+padding:12px 25px;
 border:none;
 background:white;
 color:#ff4d6d;
 font-weight:bold;
-border-radius:5px;
+border-radius:6px;
 font-size:16px;
 cursor:pointer;
 margin-top:10px;
-}
-
-h2{
-margin-top:20px;
 }
 </style>
 </head>
@@ -55,26 +50,36 @@ margin-top:20px;
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card">
-<h2>Enter Your Beautiful Name 💖</h2>
-<input type="text" id="name" placeholder="Your Name Here">
-<br>
-<button onclick="showMessage()">Open Special Message ✨</button>
+<div class="card" id="startScreen">
+<h2>💖 A Special Surprise Awaits 💖</h2>
+<button onclick="startMagic()">Tap to Feel the Magic ✨</button>
 </div>
 
 <script>
-function showMessage(){
-var name = document.getElementById("name").value;
-if(name !== ""){
-
+function startMagic(){
 var music = document.getElementById("bgmusic");
 music.play();
 
 document.body.innerHTML =
-"<div class='card'><h2>💖 Happy Valentine " + name + " 💖</h2>" +
+"<div class='card'>" +
+"<h2>Enter Your Beautiful Name 💌</h2>" +
+"<input type='text' id='name' placeholder='Your Name Here'><br>" +
+"<button onclick='showMessage()'>Open My Heart 💖</button>" +
+"</div>";
+}
+
+function showMessage(){
+var name = document.getElementById("name").value;
+if(name !== ""){
+
+document.body.innerHTML =
+"<div class='card'>" +
+"<h2>💖 Happy Valentine " + name + " 💖</h2>" +
 "<p>You are a truly special person in my life ✨</p>" +
-"<p>May your smile always shine bright 😊</p>" +
-"<p>— From Hitesh ❤️</p></div>";
+"<p>Your smile makes everything brighter 😊</p>" +
+"<p>Stay happy always 💕</p>" +
+"<p>— From Hitesh ❤️</p>" +
+"</div>";
 
 }else{
 alert("Please enter your name 💌");
