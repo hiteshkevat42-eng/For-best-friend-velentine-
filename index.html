@@ -99,13 +99,17 @@ function createEmojis(){
 }
 
 function startMagic(){
+  // Show YouTube music
   document.getElementById('youtubePlayer').style.display='block';
+
+  // Replace content with name input
   document.getElementById("content").innerHTML =
   "<div class='card'>" +
   "<h2>Enter Your Beautiful Name 💌</h2>" +
   "<input type='text' id='name' placeholder='Your Name Here'><br>" +
   "<button onclick='showMessage()'>Open My Heart 💖</button>" +
   "</div>";
+
   createEmojis();
 }
 
