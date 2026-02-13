@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine</title>
+
+<style>
+body{
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:Arial, sans-serif;
+background:#ff6b81;
+color:white;
+text-align:center;
+}
+
+.card{
+padding:20px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+background:white;
+color:#ff6b81;
+font-weight:bold;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+h2{
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<button onclick="showMessage()">Tap Here 💖</button>
+</div>
+
+<script>
+function showMessage(){
+var name = prompt("Enter Your Name 💌");
+if(name){
+document.body.innerHTML =
+"<div class='card'><h2>💖 Happy Valentine "+name+" 💖</h2><p>You are a very special friend 😊</p><p>— From Hitesh ✨</p></div>";
+}
+}
+</script>
+
+</body>
+</html>
