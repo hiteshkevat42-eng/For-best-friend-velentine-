@@ -1,132 +1,143 @@
-<DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Surprise</title>
-
 <style>
-body{
-margin:0;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-font-family:Arial, sans-serif;
-background: linear-gradient(135deg,#ff758c,#ff7eb3);
-color:white;
-text-align:center;
-overflow:hidden;
-}
-
-.card{
-padding:25px;
-border-radius:10px;
-background: rgba(255,255,255,0.1);
-box-shadow: 0 0 30px rgba(255,255,255,0.2);
-}
-
-input{
-padding:10px;
-border:none;
-border-radius:5px;
-font-size:16px;
-text-align:center;
-margin-top:10px;
-}
-
-button{
-padding:12px 25px;
-border:none;
-background:white;
-color:#ff4d6d;
-font-weight:bold;
-border-radius:6px;
-font-size:16px;
-cursor:pointer;
-margin-top:15px;
-}
-
-h2{
-margin-top:15px;
-}
-
-.emoji {
-  position: absolute;
-  font-size: 20px;
-  animation: floatAnim linear infinite;
-  pointer-events:none;
-}
-
-@keyframes floatAnim {
-  0% {transform: translateY(0) rotate(0deg);}
-  50% {transform: translateY(-200px) rotate(180deg);}
-  100% {transform: translateY(-400px) rotate(360deg);}
-}
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+  body, html { width:100%; height:100%; overflow:hidden; }
+  .page { width:100%; height:100%; display:flex; justify-content:center; align-items:center; flex-direction:column; position:absolute; top:0; left:0; transition:all 0.8s ease; background:#ffe6e6; }
+  .hidden { opacity:0; pointer-events:none; }
+  h1 { font-size:3rem; margin-bottom:20px; text-align:center; }
+  input { padding:10px; font-size:1.2rem; margin:10px 0; border-radius:10px; border:1px solid #ff4d6d; text-align:center; }
+  button { padding:10px 20px; font-size:1.2rem; border:none; border-radius:10px; background:#ff4d6d; color:white; cursor:pointer; }
+  .emoji { font-size:3rem; margin-bottom:20px; position:absolute; pointer-events:none; animation:fall linear infinite; }
+  @keyframes fall { 0% { transform:translateY(-50px) rotate(0deg); opacity:1; } 100% { transform:translateY(110vh) rotate(360deg); opacity:0; } }
+  .hearts { position:absolute; top:-50px; width:100%; height:100%; pointer-events:none; }
+  .heart { position:absolute; font-size:2rem; animation:fall linear infinite; }
+  .final-page { background:#ffb3b3; color:white; text-align:center; flex-direction:column; }
+  .cursive { font-family:'Brush Script MT', cursive; font-size:1.5rem; margin-top:20px; }
+  .bg-text { position:absolute; font-size:5rem; color:rgba(255,255,255,0.2); top:50%; left:50%; transform:translate(-50%,-50%); z-index:0; }
 </style>
 </head>
-
 <body>
 
-<!-- YouTube player hidden -->
-<div style="display:none;" id="youtubePlayer">
-  <iframe width="0" height="0" 
-    src="https://www.youtube.com/embed/q_b8tcbRhXE?autoplay=1&loop=1&playlist=q_b8tcbRhXE"
-    title="YouTube video player" frameborder="0"
-    allow="autoplay; encrypted-media" allowfullscreen>
-  </iframe>
+<!-- Music Embed -->
+<iframe id="ytmusic" width="0" height="0" src="https://www.youtube.com/embed/tHNaJj_1p6U?autoplay=1&loop=1&playlist=tHNaJj_1p6U" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+
+<!-- Pages -->
+<div class="page" id="page1">
+  <h1>Tap to Start Music & Enter</h1>
+  <button onclick="nextPage()">Start</button>
 </div>
 
-<div id="content">
-  <div class="card" id="introScreen">
-    <h2>💖 A Special Valentine Surprise 💖</h2>
-    <button onclick="startMagic()">Tap to Play Music & Open Surprise ✨</button>
-  </div>
+<div class="page hidden" id="page2">
+  <h1>Cutie, fill the date when we meet 😉</h1>
+  <input type="date" id="meetDate">
+</div>
+
+<div class="page hidden" id="page3">
+  <h1>Write your beautiful name 🫠</h1>
+  <input type="text" id="friendName" placeholder="Your name">
+</div>
+
+<div class="page hidden" id="page4">
+  <h1>Enter your nickname given by me 😁</h1>
+  <input type="text" id="nickName" placeholder="Nickname">
+</div>
+
+<div class="page hidden final-page" id="finalPage">
+  <div class="bg-text">Friendship Forever</div>
+  <div class="hearts" id="heartsContainer"></div>
+  <h1>Happy Valentine Cutie</h1>
+  <div class="cursive">Forgot your past and stay happy in present 🤗 🎁 <br> You deserve this cutie 🤌😁</div>
+  <div style="margin-top:30px;">Created by Hitesh</div>
 </div>
 
 <script>
-function createEmojis(){
-  const emojis = ['💖','💞','✨','💫','😁','😍','🌸'];
-  for(let i=0;i<30;i++){
-    let emoji = document.createElement('div');
-    emoji.className='emoji';
-    emoji.style.left=Math.random()*100+'%';
-    emoji.style.animationDuration=(3+Math.random()*5)+'s';
-    emoji.style.fontSize=(15+Math.random()*25)+'px';
-    emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-    document.body.appendChild(emoji);
+let currentPage = 1;
+const totalPages = 5;
+
+// Emoji sets for each page
+const emojisPerPage = [
+  ['🎵','🎶','🎧'],
+  ['😉','💞','🌟'],
+  ['🫠','💖','🌸'],
+  ['😁','💫','🌹']
+];
+
+// Heart types for final page
+const heartTypes = ['❤️','💖','💘','💝','💕','💓'];
+
+function nextPage() {
+  // First tap starts music
+  if(currentPage===1){
+    document.getElementById('ytmusic').style.display='block';
+  }
+
+  // Hide current page
+  document.getElementById(`page${currentPage}`).classList.add('hidden');
+  removeEmojis();
+
+  currentPage++;
+
+  // Show next page
+  if(currentPage < totalPages){
+    document.getElementById(`page${currentPage}`).classList.remove('hidden');
+    startEmojis(currentPage);
+  } else {
+    document.getElementById('finalPage').classList.remove('hidden');
+    startHearts();
   }
 }
 
-function startMagic(){
-  // Show YouTube music
-  document.getElementById('youtubePlayer').style.display='block';
-
-  // Replace content with name input
-  document.getElementById("content").innerHTML =
-  "<div class='card'>" +
-  "<h2>Enter Your Beautiful Name 💌</h2>" +
-  "<input type='text' id='name' placeholder='Your Name Here'><br>" +
-  "<button onclick='showMessage()'>Open My Heart 💖</button>" +
-  "</div>";
-
-  createEmojis();
+// Create falling emojis for pages
+function startEmojis(page){
+  const emojisContainer = [];
+  const emojis = emojisPerPage[page-2]; // pages 2,3,4
+  for(let i=0;i<15;i++){
+    const em = document.createElement('div');
+    em.classList.add('emoji');
+    em.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    em.style.left = Math.random()*100 + 'vw';
+    em.style.fontSize = (20+Math.random()*30)+'px';
+    em.style.animationDuration = (3+Math.random()*3)+'s';
+    document.body.appendChild(em);
+    emojisContainer.push(em);
+  }
+  window.currentEmojis = emojisContainer;
 }
 
-function showMessage(){
-  var name = document.getElementById("name").value;
-  if(name !== ""){
-    document.getElementById("content").innerHTML =
-    "<div class='card'>" +
-    "<h2>💖 Happy Valentine " + name + " 💖</h2>" +
-    "<p>My friend, hamesha khush raho aur muskurati rahi 😁</p>" +
-    "<p>— From Hitesh ❤️</p>" +
-    "</div>";
-    createEmojis();
-  } else{
-    alert('Please enter your name 💌');
+// Remove old emojis
+function removeEmojis(){
+  if(window.currentEmojis){
+    window.currentEmojis.forEach(e=>e.remove());
   }
 }
+
+// Falling hearts for final page
+function startHearts(){
+  const heartsContainer = document.getElementById('heartsContainer');
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+    heart.style.left = Math.random()*100 + 'vw';
+    heart.style.fontSize = (Math.random()*3 + 1)+'rem';
+    heart.style.animationDuration = (Math.random()*3 + 3)+'s';
+    heartsContainer.appendChild(heart);
+    setTimeout(()=> heart.remove(), 6000);
+  }, 300);
+}
+</script>
+
+<!-- Navigation Buttons -->
+<script>
+  // Add next buttons to pages 2,3,4
+  document.getElementById('page2').innerHTML += `<button onclick="nextPage()">Next</button>`;
+  document.getElementById('page3').innerHTML += `<button onclick="nextPage()">Next</button>`;
+  document.getElementById('page4').innerHTML += `<button onclick="nextPage()">Final Page</button>`;
 </script>
 
 </body>
