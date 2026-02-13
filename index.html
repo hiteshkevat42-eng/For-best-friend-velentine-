@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,23 +68,26 @@ margin-top:15px;
 
 <body>
 
+<!-- Music always in DOM -->
 <audio id="bgmusic" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card" id="introScreen">
-<h2>💖 A Special Valentine Surprise 💖</h2>
-<button onclick="startMagic()">Tap to Play Music & Open Surprise ✨</button>
+<div id="content">
+  <div class="card" id="introScreen">
+    <h2>💖 A Special Valentine Surprise 💖</h2>
+    <button onclick="startMagic()">Tap to Play Music & Open Surprise ✨</button>
+  </div>
 </div>
 
 <script>
 function createHearts(){
-  for(let i=0;i<20;i++){
+  for(let i=0;i<25;i++){
     let heart = document.createElement('div');
     heart.className='heart';
     heart.style.left=Math.random()*100+'%';
     heart.style.animationDuration=(3+Math.random()*5)+'s';
-    heart.style.fontSize=(10+Math.random()*20)+'px';
+    heart.style.fontSize=(10+Math.random()*25)+'px';
     heart.innerText='💖';
     document.body.appendChild(heart);
   }
@@ -92,8 +96,9 @@ function createHearts(){
 function startMagic(){
   var music = document.getElementById("bgmusic");
   music.play();
-  
-  document.body.innerHTML =
+
+  // Replace only #content
+  document.getElementById("content").innerHTML =
   "<div class='card'>" +
   "<h2>Enter Your Beautiful Name 💌</h2>" +
   "<input type='text' id='name' placeholder='Your Name Here'><br>" +
@@ -106,12 +111,12 @@ function startMagic(){
 function showMessage(){
   var name = document.getElementById("name").value;
   if(name !== ""){
-    document.body.innerHTML =
+    document.getElementById("content").innerHTML =
     "<div class='card'>" +
     "<h2>💖 Happy Valentine " + name + " 💖</h2>" +
-    "<p>You are a truly special person in my life ✨</p>" +
+    "<p>Madam ji, you are truly a special person in my life ✨</p>" +
+    "<p>😎 Daddy says: Stay amazing, always shine 💕</p>" +
     "<p>Your smile makes everything brighter 😊</p>" +
-    "<p>Stay happy always 💕</p>" +
     "<p>— From Hitesh ❤️</p>" +
     "</div>";
     createHearts();
