@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Valentine</title>
+<title>Valentine Special</title>
 
 <style>
 body{
@@ -13,24 +13,34 @@ justify-content:center;
 align-items:center;
 height:100vh;
 font-family:Arial, sans-serif;
-background:#ff6b81;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
 color:white;
 text-align:center;
+overflow:hidden;
 }
 
 .card{
-padding:20px;
+padding:25px;
+}
+
+input{
+padding:10px;
+border:none;
+border-radius:5px;
+font-size:16px;
+text-align:center;
 }
 
 button{
-padding:12px 25px;
+padding:10px 20px;
 border:none;
 background:white;
-color:#ff6b81;
+color:#ff4d6d;
 font-weight:bold;
-border-radius:6px;
+border-radius:5px;
 font-size:16px;
 cursor:pointer;
+margin-top:10px;
 }
 
 h2{
@@ -41,16 +51,33 @@ margin-top:20px;
 
 <body>
 
+<audio id="bgmusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card">
-<button onclick="showMessage()">Tap Here 💖</button>
+<h2>Enter Your Beautiful Name 💖</h2>
+<input type="text" id="name" placeholder="Your Name Here">
+<br>
+<button onclick="showMessage()">Open Special Message ✨</button>
 </div>
 
 <script>
 function showMessage(){
-var name = prompt("Enter Your Name 💌");
-if(name){
+var name = document.getElementById("name").value;
+if(name !== ""){
+
+var music = document.getElementById("bgmusic");
+music.play();
+
 document.body.innerHTML =
-"<div class='card'><h2>💖 Happy Valentine "+name+" 💖</h2><p>You are a very special friend 😊</p><p>— From Hitesh ✨</p></div>";
+"<div class='card'><h2>💖 Happy Valentine " + name + " 💖</h2>" +
+"<p>You are a truly special person in my life ✨</p>" +
+"<p>May your smile always shine bright 😊</p>" +
+"<p>— From Hitesh ❤️</p></div>";
+
+}else{
+alert("Please enter your name 💌");
 }
 }
 </script>
