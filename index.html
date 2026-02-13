@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Magic</title>
+<title>Valentine Surprise</title>
 
 <style>
 body{
@@ -13,13 +13,17 @@ justify-content:center;
 align-items:center;
 height:100vh;
 font-family:Arial, sans-serif;
-background:linear-gradient(135deg,#ff4d6d,#ff758c);
+background: linear-gradient(135deg,#ff758c,#ff7eb3);
 color:white;
 text-align:center;
+overflow:hidden;
 }
 
 .card{
 padding:25px;
+border-radius:10px;
+background: rgba(255,255,255,0.1);
+box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
 
 input{
@@ -28,6 +32,7 @@ border:none;
 border-radius:5px;
 font-size:16px;
 text-align:center;
+margin-top:10px;
 }
 
 button{
@@ -39,7 +44,23 @@ font-weight:bold;
 border-radius:6px;
 font-size:16px;
 cursor:pointer;
-margin-top:10px;
+margin-top:15px;
+}
+
+h2{
+margin-top:15px;
+}
+
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: float 5s infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(0) rotate(0deg);}
+  50% {transform: translateY(-200px) rotate(180deg);}
+  100% {transform: translateY(-400px) rotate(360deg);}
 }
 </style>
 </head>
@@ -50,40 +71,53 @@ margin-top:10px;
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card" id="startScreen">
-<h2>💖 A Special Surprise Awaits 💖</h2>
-<button onclick="startMagic()">Tap to Feel the Magic ✨</button>
+<div class="card" id="introScreen">
+<h2>💖 A Special Valentine Surprise 💖</h2>
+<button onclick="startMagic()">Tap to Play Music & Open Surprise ✨</button>
 </div>
 
 <script>
-function startMagic(){
-var music = document.getElementById("bgmusic");
-music.play();
+function createHearts(){
+  for(let i=0;i<20;i++){
+    let heart = document.createElement('div');
+    heart.className='heart';
+    heart.style.left=Math.random()*100+'%';
+    heart.style.animationDuration=(3+Math.random()*5)+'s';
+    heart.style.fontSize=(10+Math.random()*20)+'px';
+    heart.innerText='💖';
+    document.body.appendChild(heart);
+  }
+}
 
-document.body.innerHTML =
-"<div class='card'>" +
-"<h2>Enter Your Beautiful Name 💌</h2>" +
-"<input type='text' id='name' placeholder='Your Name Here'><br>" +
-"<button onclick='showMessage()'>Open My Heart 💖</button>" +
-"</div>";
+function startMagic(){
+  var music = document.getElementById("bgmusic");
+  music.play();
+  
+  document.body.innerHTML =
+  "<div class='card'>" +
+  "<h2>Enter Your Beautiful Name 💌</h2>" +
+  "<input type='text' id='name' placeholder='Your Name Here'><br>" +
+  "<button onclick='showMessage()'>Open My Heart 💖</button>" +
+  "</div>";
+
+  createHearts();
 }
 
 function showMessage(){
-var name = document.getElementById("name").value;
-if(name !== ""){
-
-document.body.innerHTML =
-"<div class='card'>" +
-"<h2>💖 Happy Valentine " + name + " 💖</h2>" +
-"<p>You are a truly special person in my life ✨</p>" +
-"<p>Your smile makes everything brighter 😊</p>" +
-"<p>Stay happy always 💕</p>" +
-"<p>— From Hitesh ❤️</p>" +
-"</div>";
-
-}else{
-alert("Please enter your name 💌");
-}
+  var name = document.getElementById("name").value;
+  if(name !== ""){
+    document.body.innerHTML =
+    "<div class='card'>" +
+    "<h2>💖 Happy Valentine " + name + " 💖</h2>" +
+    "<p>You are a truly special person in my life ✨</p>" +
+    "<p>Your smile makes everything brighter 😊</p>" +
+    "<p>Stay happy always 💕</p>" +
+    "<p>— From Hitesh ❤️</p>" +
+    "</div>";
+    createHearts();
+  } else{
+    alert('Please enter your name 💌');
+  }
 }
 </script>
 
